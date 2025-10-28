@@ -1,65 +1,205 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Controller, useForm } from "react-hook-form";
+import { toast } from "sonner";
+import * as z from "zod";
+
+import { Button } from "@/components/ui/button";
+import {
+  Field,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+} from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import { useChat } from "@ai-sdk/react";
+import { ArrowUp, Eraser, Loader2, PlusIcon, Square } from "lucide-react";
+import { MessageWall } from "@/components/messages/message-wall";
+import { ChatHeader } from "@/app/parts/chat-header";
+import { ChatHeaderBlock } from "@/app/parts/chat-header";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { UIMessage } from "ai";
+import { useEffect, useState } from "react";
+
+const formSchema = z.object({
+  message: z
+    .string()
+    .min(1, "Message cannot be empty.")
+    .max(2000, "Message must be at most 2000 characters."),
+});
+
+// Local storage utilities
+const STORAGE_KEY = 'chat-messages';
+
+const loadMessagesFromStorage = (): UIMessage[] => {
+  if (typeof window === 'undefined') return [];
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    return stored ? JSON.parse(stored) : [];
+  } catch (error) {
+    console.error('Failed to load messages from localStorage:', error);
+    return [];
+  }
+};
+
+const saveMessagesToStorage = (messages: UIMessage[]) => {
+  if (typeof window === 'undefined') return;
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
+  } catch (error) {
+    console.error('Failed to save messages to localStorage:', error);
+  }
+};
+
+const clearMessagesFromStorage = () => {
+  if (typeof window === 'undefined') return;
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch (error) {
+    console.error('Failed to clear messages from localStorage:', error);
+  }
+};
+
+export default function Chat() {
+  const [isClient, setIsClient] = useState(false);
+  const [initialMessages, setInitialMessages] = useState<UIMessage[]>([]);
+
+  const { messages, sendMessage, status, stop, setMessages } = useChat({
+    messages: initialMessages,
+  });
+
+  useEffect(() => {
+    setIsClient(true);
+    const storedMessages = loadMessagesFromStorage();
+    setInitialMessages(storedMessages);
+    setMessages(storedMessages);
+  }, [setMessages]);
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      message: "",
+    },
+  });
+
+  useEffect(() => {
+    if (messages.length > 0) {
+      saveMessagesToStorage(messages);
+    }
+  }, [messages]);
+
+  function onSubmit(data: z.infer<typeof formSchema>) {
+    sendMessage({ text: data.message });
+    form.reset();
+  }
+
+  function clearChat() {
+    setMessages([]);
+    clearMessagesFromStorage();
+    toast.success("Chat cleared");
+  }
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <div className="flex h-screen items-center justify-center bg-white font-sans dark:bg-black">
+      <main className="flex w-full flex-col dark:bg-black h-screen">
+        <ChatHeader>
+          <ChatHeaderBlock />
+          <ChatHeaderBlock className="justify-center items-center">
+            <Avatar>
+              <AvatarImage src="/logo.png" />
+              <AvatarFallback>AI</AvatarFallback>
+            </Avatar>
+            <p className="tracking-tight">Chat with AI</p>
+          </ChatHeaderBlock>
+          <ChatHeaderBlock className="justify-end">
+            <Button
+              variant="outline"
+              size="sm"
+              className="cursor-pointer"
+              onClick={clearChat}
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+              <Eraser className="size-4" />
+              Clear chat
+            </Button>
+          </ChatHeaderBlock>
+        </ChatHeader>
+        <div className="flex-1 overflow-y-auto px-5 py-4 w-full">
+          <div className="flex flex-col items-center justify-end min-h-full">
+            {isClient ? (
+              <>
+                <MessageWall messages={messages} status={status} />
+                {status === "submitted" && (
+                  <div className="flex justify-start max-w-3xl w-full">
+                    <Loader2 className="size-4 animate-spin text-muted-foreground" />
+                  </div>
+                )}
+              </>
+            ) : (
+              <div className="flex justify-center max-w-3xl w-full">
+                <Loader2 className="size-4 animate-spin text-muted-foreground" />
+              </div>
+            )}
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+        <div className="w-full px-5 py-5 items-center flex justify-center">
+          <div className="max-w-3xl w-full">
+            <form id="chat-form" onSubmit={form.handleSubmit(onSubmit)}>
+              <FieldGroup>
+                <Controller
+                  name="message"
+                  control={form.control}
+                  render={({ field, fieldState }) => (
+                    <Field data-invalid={fieldState.invalid}>
+                      <FieldLabel htmlFor="chat-form-message" className="sr-only">
+                        Message
+                      </FieldLabel>
+                      <div className="relative h-13">
+                        <Input
+                          {...field}
+                          id="chat-form-message"
+                          className="h-13 pr-12"
+                          placeholder="Type your message here..."
+                          disabled={status === "streaming"}
+                          aria-invalid={fieldState.invalid}
+                          autoComplete="off"
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter" && !e.shiftKey) {
+                              e.preventDefault();
+                              form.handleSubmit(onSubmit)();
+                            }
+                          }}
+                        />
+                        {(status == "ready" || status == "error") && (
+                          <Button
+                            className="absolute right-2 top-2"
+                            type="submit"
+                            disabled={!field.value.trim()}
+                            size="icon"
+                          >
+                            <ArrowUp className="size-4" />
+                          </Button>
+                        )}
+                        {(status == "streaming" || status == "submitted") && (
+                          <Button
+                            className="absolute right-2 top-2"
+                            size="icon"
+                            onClick={() => {
+                              stop();
+                            }}
+                          >
+                            <Square className="size-4" />
+                          </Button>
+                        )}
+                      </div>
+                    </Field>
+                  )}
+                />
+              </FieldGroup>
+            </form>
+          </div>
         </div>
       </main>
-    </div>
+    </div >
   );
 }
