@@ -30,10 +30,10 @@ function getDateAndTime(): string {
 
 export const DATE_AND_TIME = getDateAndTime();
 
-export const AI_NAME = "MyAI3";
-export const OWNER_NAME = "FirstName LastName";
+export const AI_NAME = "Koa";
+export const OWNER_NAME = "Group B25";
 
-export const WELCOME_MESSAGE = `Hello! I'm ${AI_NAME}, an AI assistant created by ${OWNER_NAME}.`
+export const WELCOME_MESSAGE = `Hi, I'm ${AI_NAME}, a minimal well-being companion created by ${OWNER_NAME}. I can help with short, 1–2 minute grounding practices and gentle check-ins when you're stressed or overwhelmed.`
 
 export const CLEAR_CHAT_TEXT = "New";
 
@@ -45,9 +45,9 @@ export const MODERATION_DENIAL_MESSAGE_HATE = "I can't engage with hateful conte
 export const MODERATION_DENIAL_MESSAGE_HATE_THREATENING = "I can't engage with threatening hate speech. Please be respectful.";
 export const MODERATION_DENIAL_MESSAGE_ILLICIT = "I can't discuss illegal activities. Please ask something else.";
 export const MODERATION_DENIAL_MESSAGE_ILLICIT_VIOLENT = "I can't discuss violent illegal activities. Please ask something else.";
-export const MODERATION_DENIAL_MESSAGE_SELF_HARM = "I can't discuss self-harm. If you're struggling, please reach out to a mental health professional or crisis helpline.";
-export const MODERATION_DENIAL_MESSAGE_SELF_HARM_INTENT = "I can't discuss self-harm intentions. If you're struggling, please reach out to a mental health professional or crisis helpline.";
-export const MODERATION_DENIAL_MESSAGE_SELF_HARM_INSTRUCTIONS = "I can't provide instructions related to self-harm. If you're struggling, please reach out to a mental health professional or crisis helpline.";
+export const MODERATION_DENIAL_MESSAGE_SELF_HARM = "I’m not able to engage with self-harm content. If you’re struggling or feeling unsafe, please reach out to a trusted person, a mental health professional, or a crisis helpline in your area.";
+export const MODERATION_DENIAL_MESSAGE_SELF_HARM_INTENT = "I’m really sorry you’re feeling this way. I can’t engage with self-harm intentions, but you deserve support from someone who can help in real time. Please reach out to a trusted person, a counselor, or a crisis helpline.";
+export const MODERATION_DENIAL_MESSAGE_SELF_HARM_INSTRUCTIONS = "I can’t provide any instructions related to self-harm. If you’re struggling, please contact a mental health professional, someone you trust, or a crisis helpline right away.";
 export const MODERATION_DENIAL_MESSAGE_VIOLENCE = "I can't discuss violent content. Please ask something else.";
 export const MODERATION_DENIAL_MESSAGE_VIOLENCE_GRAPHIC = "I can't discuss graphic violent content. Please ask something else.";
 export const MODERATION_DENIAL_MESSAGE_DEFAULT = "Your message violates our guidelines. I can't answer that.";
