@@ -224,6 +224,8 @@ export default function Chat() {
                     className="rounded-full border border-emerald-100 bg-emerald-50/70 px-3 py-1 text-emerald-900 transition hover:bg-emerald-100"
                     onClick={() => {
                       form.setValue("message", prompt);
+                      form.handleSubmit(onSubmit)();
+                      form.reset();
                     }}
                   >
                     {prompt}
