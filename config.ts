@@ -45,10 +45,9 @@ export const MODERATION_DENIAL_MESSAGE_HATE = "I can't engage with hateful conte
 export const MODERATION_DENIAL_MESSAGE_HATE_THREATENING = "I can't engage with threatening hate speech. Please be respectful.";
 export const MODERATION_DENIAL_MESSAGE_ILLICIT = "I can't discuss illegal activities. Please ask something else.";
 export const MODERATION_DENIAL_MESSAGE_ILLICIT_VIOLENT = "I can't discuss violent illegal activities. Please ask something else.";
-export const MODERATION_DENIAL_MESSAGE_SELF_HARM = "I’m not able to engage with self-harm content. If you’re struggling or feeling unsafe, please reach out to a trusted person, a mental health professional, or call this crisis number for immediate help: (0796) 9016551
-.";
-export const MODERATION_DENIAL_MESSAGE_SELF_HARM_INTENT = "I’m really sorry you’re feeling this way. I can’t engage with self-harm intentions, but you deserve support from someone who can help in real time. Please reach out to a trusted person, a counselor, or call this crisis number for immediate help: (0796) 9016551.";
-export const MODERATION_DENIAL_MESSAGE_SELF_HARM_INSTRUCTIONS = "I can’t provide any instructions related to self-harm. If you’re struggling, please contact a mental health professional, someone you trust, or call this crisis number for immediate help: (0796) 9016551.";
+export const MODERATION_DENIAL_MESSAGE_SELF_HARM = "I’m not able to engage with self-harm content. If you’re struggling or feeling unsafe, please reach out to a trusted person, a mental health professional, or call this crisis number for immediate help 0796 9016551.";
+export const MODERATION_DENIAL_MESSAGE_SELF_HARM_INTENT = "I’m really sorry you’re feeling this way. I can’t engage with self-harm intentions, but you deserve support from someone who can help in real time. Please reach out to a trusted person, a counselor, or call this crisis number for immediate help 0796 9016551.";
+export const MODERATION_DENIAL_MESSAGE_SELF_HARM_INSTRUCTIONS = "I can’t provide any instructions related to self-harm. If you’re struggling, please contact a mental health professional, someone you trust, or call this crisis number for immediate help 0796 9016551.";
 export const MODERATION_DENIAL_MESSAGE_VIOLENCE = "I can't discuss violent content. Please ask something else.";
 export const MODERATION_DENIAL_MESSAGE_VIOLENCE_GRAPHIC = "I can't discuss graphic violent content. Please ask something else.";
 export const MODERATION_DENIAL_MESSAGE_DEFAULT = "Your message violates our guidelines. I can't answer that.";
