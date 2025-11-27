@@ -161,17 +161,14 @@ export default function Chat() {
   return (
     <div className="flex h-screen items-center justify-center font-sans bg-emerald-50/40 dark:bg-black">
       <main className="relative h-screen w-full bg-transparent">
-        {/* Top gradient header */}
-        <div className="fixed left-0 right-0 top-0 z-50 overflow-visible bg-linear-to-b from-background via-background/60 to-transparent dark:bg-black pb-16">
+        {/* Header (non-fixed so it doesn't block clicks) */}
+        <div className="w-full overflow-visible bg-linear-to-b from-background via-background/60 to-transparent dark:bg-black pb-4">
           <div className="relative overflow-visible">
             <ChatHeader>
-              {/* Left side spacer / optional content */}
               <ChatHeaderBlock />
 
-              {/* Center: Koa identity */}
               <ChatHeaderBlock className="items-center justify-center gap-3">
                 <Avatar className="size-9 ring-1 ring-emerald-300 bg-white shadow-sm">
-                  {/* Use your Koa icon here */}
                   <AvatarImage src="/koa-icon.png" />
                   <AvatarFallback>
                     <Image
@@ -184,7 +181,7 @@ export default function Chat() {
                 </Avatar>
                 <div className="flex flex-col">
                   <p className="text-sm font-semibold tracking-tight text-slate-900">
-                    {AI_NAME} · Well-Being Companion
+                    Koa · Well-Being Companion
                   </p>
                   <p className="text-[11px] text-muted-foreground">
                     Share how you&apos;re feeling; I&apos;ll suggest a 1–2 minute
@@ -193,7 +190,6 @@ export default function Chat() {
                 </div>
               </ChatHeaderBlock>
 
-              {/* Right side: clear chat button */}
               <ChatHeaderBlock className="justify-end">
                 <Button
                   variant="outline"
@@ -209,9 +205,10 @@ export default function Chat() {
           </div>
         </div>
 
-        {/* Scrollable content */}
-        <div className="h-screen w-full overflow-y-auto px-5 py-4 pt-[96px] pb-[150px]">
+        {/* Scrollable main content */}
+        <div className="h-screen w-full overflow-y-auto px-5 py-4 pt-4 pb-[150px]">
           <div className="flex min-h-full flex-col items-center justify-start">
+            {/* Mood chips */}
             <div className="mb-3 flex w-full max-w-3xl flex-col gap-2">
               <p className="text-xs text-slate-500">
                 Not sure how to begin? You can start with one of these:
@@ -223,7 +220,9 @@ export default function Chat() {
                     type="button"
                     className="rounded-full border border-emerald-100 bg-emerald-50/70 px-3 py-1 text-emerald-900 transition hover:bg-emerald-100"
                     onClick={() => {
+                      // show it in the input (optional)
                       form.setValue("message", prompt);
+                      // send directly through chat hook
                       sendMessage({ text: prompt });
                     }}
                   >
@@ -233,6 +232,7 @@ export default function Chat() {
               </div>
             </div>
 
+            {/* Messages */}
             {isClient ? (
               <>
                 <MessageWall
@@ -314,7 +314,6 @@ export default function Chat() {
                             </Button>
                           )}
                         </div>
-                        {/* Safety hint */}
                         <p className="mt-1 text-[10px] leading-snug text-muted-foreground">
                           Koa offers simple, non-clinical wellbeing suggestions.
                           It doesn&apos;t replace professional help. If things
