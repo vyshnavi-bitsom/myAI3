@@ -1,207 +1,162 @@
-import { ArrowLeftIcon } from "lucide-react";
+// app/terms/page.tsx
+
 import Link from "next/link";
-import { OWNER_NAME } from "@/config";
 
-export default function Terms() {
-    return (
-        <div className="w-full flex justify-center p-10">
-            <div className="w-full max-w-screen-md space-y-6">
-                <Link
-                    href="/"
-                    className="flex items-center gap-2 text-gray-500 hover:text-gray-700 underline"
-                >
-                    <ArrowLeftIcon className="w-4 h-4" />
-                    Back to Chatbot
-                </Link>
-                <h1 className="text-3xl font-bold">MyAI3</h1>
-                <h2 className="text-2xl font-semibold">Terms of Use / Disclaimer</h2>
+export default function TermsPage() {
+  return (
+    <main className="min-h-screen bg-emerald-50/40 px-4 py-8 text-slate-900">
+      <div className="mx-auto max-w-3xl rounded-2xl bg-white p-6 shadow-sm border border-emerald-100">
+        <h1 className="text-2xl font-semibold mb-2">Terms of Use</h1>
+        <p className="text-sm text-slate-500 mb-6">
+          Last updated: {new Date().toLocaleDateString("en-IN")}
+        </p>
 
-                <p className="text-gray-700">
-                    The following terms of use govern access to and use of the MyAI3
-                    Assistant ("AI Chatbot"), an artificial intelligence tool provided by
-                    {OWNER_NAME} ("I", "me", or "myself"). By engaging with the AI
-                    Chatbot, you agree to these terms. If you do not agree, you may not
-                    use the AI Chatbot.
-                </p>
+        <section className="space-y-4 text-sm leading-relaxed">
+          <p>
+            These Terms of Use (&quot;Terms&quot;) govern your use of{" "}
+            <strong>Koa</strong>, a minimal well-being companion chatbot
+            (&quot;Koa,&quot; &quot;we,&quot; &quot;us,&quot; or
+            &quot;our&quot;). By using this chatbot, you agree to these Terms.
+            If you do not agree, please do not use Koa.
+          </p>
 
-                <div className="space-y-4">
-                    <h3 className="text-xl font-semibold">General Information</h3>
-                    <ol className="list-decimal list-inside space-y-3">
-                        <li className="text-gray-700">
-                            <span className="font-semibold">Provider and Purpose:</span> The
-                            AI Chatbot is a tool developed and maintained by {OWNER_NAME}. It
-                            is intended solely to assist users with questions and coursework
-                            related to courses taught by {OWNER_NAME}. The AI Chatbot is not
-                            affiliated with, endorsed by, or operated by the course provider.
-                        </li>
-                        <li className="text-gray-700">
-                            <span className="font-semibold">Third-Party Involvement:</span>{" "}
-                            The AI Chatbot utilizes multiple third-party platforms and
-                            vendors, some of which operate outside the United States. Your
-                            inputs may be transmitted, processed, and stored by these
-                            third-party systems. As such, confidentiality, security, and privacy
-                            cannot be guaranteed, and data transmission may be inherently
-                            insecure and subject to interception.
-                        </li>
-                        <li className="text-gray-700">
-                            <span className="font-semibold">No Guarantee of Accuracy:</span>{" "}
-                            The AI Chatbot is designed to provide helpful and relevant
-                            responses but may deliver inaccurate, incomplete, or outdated
-                            information. Users are strongly encouraged to independently verify
-                            any information before relying on it for decisions or actions.
-                        </li>
-                    </ol>
-                </div>
+          <h2 className="text-base font-semibold mt-4">1. Purpose of Koa</h2>
+          <p>
+            Koa is designed for <strong>general emotional well-being support</strong> only.
+            It offers:
+          </p>
+          <ul className="list-disc pl-6 space-y-1">
+            <li>Short grounding or mindfulness micro-practices</li>
+            <li>Gentle reflections and reframes</li>
+            <li>Non-clinical check-ins around stress, mood, and motivation</li>
+          </ul>
+          <p className="mt-2">
+            Koa is an <strong>AI-based educational and self-help tool</strong>, not a
+            replacement for therapy, counselling, medical care, or crisis
+            intervention.
+          </p>
 
-                <div className="space-y-4">
-                    <h3 className="text-xl font-semibold">Liability</h3>
-                    <ol className="list-decimal list-inside space-y-3">
-                        <li className="text-gray-700">
-                            <span className="font-semibold">Use at Your Own Risk:</span> The
-                            AI Chatbot is provided on an "as-is" and "as-available" basis. To
-                            the fullest extent permitted by law:
-                            <ul className="list-disc list-inside ml-6 mt-2 space-y-2">
-                                <li>
-                                    {OWNER_NAME} disclaims all warranties, express or implied,
-                                    including but not limited to warranties of merchantability,
-                                    fitness for a particular purpose, and non-infringement.
-                                </li>
-                                <li>
-                                    {OWNER_NAME} is not liable for any errors, inaccuracies, or
-                                    omissions in the information provided by the AI Chatbot.
-                                </li>
-                            </ul>
-                        </li>
-                        <li className="text-gray-700">
-                            <span className="font-semibold">
-                                No Responsibility for Damages:
-                            </span>{" "}
-                            Under no circumstances shall {OWNER_NAME}, his collaborators,
-                            partners, affiliated entities, or representatives be liable for
-                            any direct, indirect, incidental, consequential, special, or
-                            punitive damages arising out of or in connection with the use of
-                            the AI Chatbot.
-                        </li>
-                        <li className="text-gray-700">
-                            <span className="font-semibold">
-                                Modification or Discontinuation:
-                            </span>{" "}
-                            I reserve the right to modify, suspend, or discontinue the AI
-                            Chatbot's functionalities at any time without notice.
-                        </li>
-                        <li className="text-gray-700">
-                            <span className="font-semibold">Future Fees:</span> While the AI
-                            Chatbot is currently provided free of charge, I reserve the right
-                            to implement a fee for its use at any time.
-                        </li>
-                    </ol>
-                </div>
+          <h2 className="text-base font-semibold mt-4">
+            2. No Medical or Mental-Health Advice
+          </h2>
+          <p>
+            Koa does <strong>not</strong>:
+          </p>
+          <ul className="list-disc pl-6 space-y-1">
+            <li>Diagnose any mental-health or medical condition</li>
+            <li>Provide clinical treatment, therapy, or counselling</li>
+            <li>Recommend or adjust medication</li>
+            <li>Replace professional advice from a qualified expert</li>
+          </ul>
+          <p className="mt-2">
+            Always consult a qualified professional (such as a doctor,
+            psychologist, or counsellor) for concerns about your mental or
+            physical health.
+          </p>
 
-                <div className="space-y-4">
-                    <h3 className="text-xl font-semibold">User Responsibilities</h3>
-                    <ol className="list-decimal list-inside space-y-3">
-                        <li className="text-gray-700">
-                            <span className="font-semibold">Eligibility:</span> Use of the AI
-                            Chatbot is restricted to individuals aged 18 or older.
-                        </li>
-                        <li className="text-gray-700">
-                            <span className="font-semibold">Prohibited Conduct:</span> By
-                            using the AI Chatbot, you agree not to:
-                            <ul className="list-disc list-inside ml-6 mt-2 space-y-2">
-                                <li>Post or transmit content that is defamatory, offensive, intimidating, illegal, racist, discriminatory, obscene, or otherwise inappropriate.</li>
-                                <li>Use the AI Chatbot to engage in unlawful or unethical activities.</li>
-                                <li>Attempt to compromise the security or functionality of the AI Chatbot</li>
-                                <li>Copy, distribute, modify, reverse engineer, decompile, or extract the source code of the AI Chatbot without explicit written consent.</li>
-                            </ul>
-                        </li>
-                    </ol>
-                </div>
+          <h2 className="text-base font-semibold mt-4">3. Crisis &amp; Safety</h2>
+          <p>
+            Koa is <strong>not suitable for emergencies or crisis situations</strong>. If
+            you are in immediate danger, feel unable to keep yourself safe, or
+            are thinking about self-harm or harming others, please:
+          </p>
+          <ul className="list-disc pl-6 space-y-1">
+            <li>Contact local emergency services, or</li>
+            <li>Reach out to a trusted person, or</li>
+            <li>Call a local mental-health or crisis helpline if available</li>
+          </ul>
+          <p className="mt-2">
+            Koa may gently encourage you to seek offline support, but it cannot
+            assess risk in real time or intervene in emergencies.
+          </p>
 
-                <div className="space-y-4">
-                    <h3 className="text-xl font-semibold">Data Privacy and Security</h3>
-                    <ol className="list-decimal list-inside space-y-3">
-                        <li className="text-gray-700">
-                            <span className="font-semibold">No Privacy Guarantee:</span> The
-                            AI Chatbot does not guarantee privacy, confidentiality, or
-                            security of the information you provide. Conversations may be
-                            reviewed by {OWNER_NAME}, collaborators, partners, or affiliated
-                            entities for purposes such as improving the AI Chatbot, developing
-                            course materials, and conducting research.
-                        </li>
-                        <li className="text-gray-700">
-                            <span className="font-semibold">Public Information:</span> Any
-                            information you provide through the AI Chatbot is treated as
-                            public.
-                        </li>
-                        <li className="text-gray-700">
-                            <span className="font-semibold">Data Transmission:</span> Inputs
-                            may be transmitted to and processed by third-party services.
-                        </li>
-                    </ol>
-                </div>
+          <h2 className="text-base font-semibold mt-4">
+            4. Use of AI-Generated Content
+          </h2>
+          <p>
+            Responses in Koa are generated by an AI model based on your inputs
+            and a curated set of well-being practices. As with all AI systems:
+          </p>
+          <ul className="list-disc pl-6 space-y-1">
+            <li>Responses may be incomplete, imperfect, or occasionally incorrect</li>
+            <li>Different sessions may produce different answers</li>
+            <li>
+              You should use your own judgment before acting on any suggestions
+            </li>
+          </ul>
+          <p className="mt-2">
+            By using Koa, you acknowledge these limitations and agree that you
+            are responsible for how you interpret and use the information
+            provided.
+          </p>
 
-                <div className="space-y-4">
-                    <h3 className="text-xl font-semibold">Ownership of Content and Commercial Use</h3>
-                    <ol className="list-decimal list-inside space-y-3">
-                        <li className="text-gray-700">
-                            <span className="font-semibold">Surrender of Rights:</span> By
-                            using the AI Chatbot, you irrevocably assign and surrender all rights,
-                            title, interest, and intellectual property rights in any content, inputs
-                            you provide, and outputs generated by the AI Chatbot to {OWNER_NAME}.
-                            This includes, but is not limited to, text, questions, and conversations.
-                        </li>
-                        <li className="text-gray-700">
-                            <span className="font-semibold">Commercial and Research Use:</span>{" "}
-                            {OWNER_NAME} reserves the right to use any input provided by users and
-                            any output generated by the AI Chatbot for commercial purposes, research,
-                            or other activities without compensation or notification to users.
-                        </li>
-                        <li className="text-gray-700">
-                            <span className="font-semibold">No Claim to Gains or Profits:</span>{" "}
-                            Users agree that they have no rights, claims, or entitlement to
-                            any gains, profits, or benefits derived from the use or
-                            exploitation of the content provided to the AI Chatbot.
-                        </li>
-                    </ol>
-                </div>
+          <h2 className="text-base font-semibold mt-4">5. Acceptable Use</h2>
+          <p>You agree not to use Koa to:</p>
+          <ul className="list-disc pl-6 space-y-1">
+            <li>Seek instructions for self-harm or harming others</li>
+            <li>Request illegal, abusive, or violent content</li>
+            <li>Harass, threaten, or bully others</li>
+            <li>Try to bypass safety features or filters</li>
+          </ul>
 
-                <div className="space-y-4">
-                    <h3 className="text-xl font-semibold">Indemnification</h3>
-                    <p className="text-gray-700">
-                        By using the AI Chatbot, you agree to indemnify and hold harmless
-                        {OWNER_NAME}, his collaborators, partners, affiliated entities, and
-                        representatives from any claims, damages, losses, or liabilities
-                        arising out of your use of the AI Chatbot or violation of these
-                        terms.
-                    </p>
-                </div>
+          <h2 className="text-base font-semibold mt-4">6. Data &amp; Privacy</h2>
+          <p>
+            This chatbot may log your interactions for the purposes of
+            <strong> improving the system, debugging, or academic evaluation</strong>.
+            Please avoid sharing sensitive personal information such as:
+          </p>
+          <ul className="list-disc pl-6 space-y-1">
+            <li>Full name, address, or contact details</li>
+            <li>Financial information or passwords</li>
+            <li>Highly sensitive personal or medical details</li>
+          </ul>
+          <p className="mt-2">
+            This project is primarily for educational and demonstration purposes
+            (e.g., an academic assignment). For more information about how your
+            data is handled, please contact the project team or institution.
+          </p>
 
-                <div className="space-y-4">
-                    <h3 className="text-xl font-semibold">Governing Law and Jurisdiction</h3>
-                    <p className="text-gray-700">
-                        These terms are governed by the laws of the State of North Carolina,
-                        United States. Additional jurisdictions may apply for users outside
-                        the United States, subject to applicable local laws. In case of
-                        conflicts, the laws of North Carolina shall prevail to the extent
-                        permissible. Any disputes arising under or in connection with these
-                        terms shall be subject to the exclusive jurisdiction of the courts
-                        located in North Carolina.
-                    </p>
-                </div>
+          <h2 className="text-base font-semibold mt-4">
+            7. No Warranty &amp; Limitation of Liability
+          </h2>
+          <p>
+            Koa is provided on an <strong>&quot;as is&quot; and &quot;as available&quot;</strong> basis, without
+            warranties of any kind. To the maximum extent permitted by law, the
+            creators and institution are not liable for:
+          </p>
+          <ul className="list-disc pl-6 space-y-1">
+            <li>Any decisions you make based on Koa&apos;s responses</li>
+            <li>Any harm, loss, or damages arising from use or inability to use Koa</li>
+          </ul>
 
-                <div className="space-y-4">
-                    <h3 className="text-xl font-semibold">Acceptance of Terms</h3>
-                    <p className="text-gray-700">
-                        By using the AI Chatbot, you confirm that you have read, understood,
-                        and agreed to these Terms of Use and Disclaimer. If you do not
-                        agree with any part of these terms, you may not use the AI Chatbot.
-                    </p>
-                </div>
+          <h2 className="text-base font-semibold mt-4">
+            8. Changes to These Terms
+          </h2>
+          <p>
+            These Terms may be updated from time to time to reflect changes in
+            the project, technology, or legal requirements. The &quot;Last
+            updated&quot; date at the top of this page indicates when the Terms
+            were last revised.
+          </p>
 
-                <div className="mt-8 text-sm text-gray-600">
-                    <p>Last Updated: November 17, 2025</p>
-                </div>
-            </div>
+          <h2 className="text-base font-semibold mt-4">9. Contact</h2>
+          <p>
+            If you have questions about these Terms or about Koa, please reach
+            out to the project team or course instructor.
+          </p>
+
+          <p className="mt-6 text-xs text-slate-500">
+            By continuing to use Koa, you confirm that you have read and
+            understood these Terms of Use.
+          </p>
+        </section>
+
+        <div className="mt-8 text-xs text-slate-500">
+          <Link href="/" className="underline">
+            ← Back to Koa
+          </Link>
         </div>
-    );
+      </div>
+    </main>
+  );
 }
