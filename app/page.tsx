@@ -6,21 +6,22 @@ import { toast } from "sonner";
 import * as z from "zod";
 
 import { Button } from "@/components/ui/button";
-import {
-  Field,
-  FieldGroup,
-  FieldLabel,
-} from "@/components/ui/field";
+import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { useChat } from "@ai-sdk/react";
-import { ArrowUp, Eraser, Loader2, Plus, PlusIcon, Square } from "lucide-react";
+import { ArrowUp, Loader2, Plus, Square } from "lucide-react";
 import { MessageWall } from "@/components/messages/message-wall";
 import { ChatHeader } from "@/app/parts/chat-header";
 import { ChatHeaderBlock } from "@/app/parts/chat-header";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { UIMessage } from "ai";
 import { useEffect, useState, useRef } from "react";
-import { AI_NAME, CLEAR_CHAT_TEXT, OWNER_NAME, WELCOME_MESSAGE } from "@/config";
+import {
+  AI_NAME,
+  CLEAR_CHAT_TEXT,
+  OWNER_NAME,
+  WELCOME_MESSAGE,
+} from "@/config";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -31,15 +32,18 @@ const formSchema = z.object({
     .max(2000, "Message must be at most 2000 characters."),
 });
 
-const STORAGE_KEY = 'chat-messages';
+const STORAGE_KEY = "chat-messages";
 
 type StorageData = {
   messages: UIMessage[];
   durations: Record<string, number>;
 };
 
-const loadMessagesFromStorage = (): { messages: UIMessage[]; durations: Record<string, number> } => {
-  if (typeof window === 'undefined') return { messages: [], durations: {} };
+const loadMessagesFromStorage = (): {
+  messages: UIMessage[];
+  durations: Record<string, number>;
+} => {
+  if (typeof window === "undefined") return { messages: [], durations: {} };
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (!stored) return { messages: [], durations: {} };
@@ -50,18 +54,21 @@ const loadMessagesFromStorage = (): { messages: UIMessage[]; durations: Record<s
       durations: parsed.durations || {},
     };
   } catch (error) {
-    console.error('Failed to load messages from localStorage:', error);
+    console.error("Failed to load messages from localStorage:", error);
     return { messages: [], durations: {} };
   }
 };
 
-const saveMessagesToStorage = (messages: UIMessage[], durations: Record<string, number>) => {
-  if (typeof window === 'undefined') return;
+const saveMessagesToStorage = (
+  messages: UIMessage[],
+  durations: Record<string, number>
+) => {
+  if (typeof window === "undefined") return;
   try {
     const data: StorageData = { messages, durations };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
   } catch (error) {
-    console.error('Failed to save messages to localStorage:', error);
+    console.error("Failed to save messages to localStorage:", error);
   }
 };
 
@@ -70,7 +77,10 @@ export default function Chat() {
   const [durations, setDurations] = useState<Record<string, number>>({});
   const welcomeMessageShownRef = useRef<boolean>(false);
 
-  const stored = typeof window !== 'undefined' ? loadMessagesFromStorage() : { messages: [], durations: {} };
+  const stored =
+    typeof window !== "undefined"
+      ? loadMessagesFromStorage()
+      : { messages: [], durations: {} };
   const [initialMessages] = useState<UIMessage[]>(stored.messages);
 
   const { messages, sendMessage, status, stop, setMessages } = useChat({
@@ -81,6 +91,7 @@ export default function Chat() {
     setIsClient(true);
     setDurations(stored.durations);
     setMessages(stored.messages);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -98,7 +109,11 @@ export default function Chat() {
   };
 
   useEffect(() => {
-    if (isClient && initialMessages.length === 0 && !welcomeMessageShownRef.current) {
+    if (
+      isClient &&
+      initialMessages.length === 0 &&
+      !welcomeMessageShownRef.current
+    ) {
       const welcomeMessage: UIMessage = {
         id: `welcome-${Date.now()}`,
         role: "assistant",
@@ -136,60 +151,117 @@ export default function Chat() {
     toast.success("Chat cleared");
   }
 
+  const quickPrompts = [
+    "I’m feeling anxious about exams",
+    "I’m overwhelmed with work",
+    "I feel low and unmotivated",
+    "I just want a 1-minute reset",
+  ];
+
   return (
-    <div className="flex h-screen items-center justify-center font-sans dark:bg-black">
-      <main className="w-full dark:bg-black h-screen relative">
-        <div className="fixed top-0 left-0 right-0 z-50 bg-linear-to-b from-background via-background/50 to-transparent dark:bg-black overflow-visible pb-16">
+    <div className="flex h-screen items-center justify-center font-sans bg-emerald-50/40 dark:bg-black">
+      <main className="relative h-screen w-full bg-transparent">
+        {/* Top gradient header */}
+        <div className="fixed left-0 right-0 top-0 z-50 overflow-visible bg-linear-to-b from-background via-background/60 to-transparent dark:bg-black pb-16">
           <div className="relative overflow-visible">
             <ChatHeader>
+              {/* Left side spacer / optional content */}
               <ChatHeaderBlock />
-              <ChatHeaderBlock className="justify-center items-center">
-                <Avatar
-                  className="size-8 ring-1 ring-primary"
-                >
-                  <AvatarImage src="/logo.png" />
+
+              {/* Center: Koa identity */}
+              <ChatHeaderBlock className="items-center justify-center gap-3">
+                <Avatar className="size-9 ring-1 ring-emerald-300 bg-white shadow-sm">
+                  {/* Use your Koa icon here */}
+                  <AvatarImage src="/koa-icon.png" />
                   <AvatarFallback>
-                    <Image src="/logo.png" alt="Logo" width={36} height={36} />
+                    <Image
+                      src="/koa-icon.png"
+                      alt="Koa icon"
+                      width={36}
+                      height={36}
+                    />
                   </AvatarFallback>
                 </Avatar>
-                <p className="tracking-tight">Chat with {AI_NAME}</p>
+                <div className="flex flex-col">
+                  <p className="text-sm font-semibold tracking-tight text-slate-900">
+                    {AI_NAME} · Well-Being Companion
+                  </p>
+                  <p className="text-[11px] text-muted-foreground">
+                    Share how you&apos;re feeling; I&apos;ll suggest a 1–2 minute
+                    grounding or micro-mindfulness practice.
+                  </p>
+                </div>
               </ChatHeaderBlock>
+
+              {/* Right side: clear chat button */}
               <ChatHeaderBlock className="justify-end">
                 <Button
                   variant="outline"
                   size="sm"
-                  className="cursor-pointer"
+                  className="cursor-pointer rounded-full border-emerald-200 bg-white/70 text-xs hover:bg-emerald-50"
                   onClick={clearChat}
                 >
-                  <Plus className="size-4" />
+                  <Plus className="mr-1 size-4" />
                   {CLEAR_CHAT_TEXT}
                 </Button>
               </ChatHeaderBlock>
             </ChatHeader>
           </div>
         </div>
-        <div className="h-screen overflow-y-auto px-5 py-4 w-full pt-[88px] pb-[150px]">
-          <div className="flex flex-col items-center justify-end min-h-full">
+
+        {/* Scrollable content */}
+        <div className="h-screen w-full overflow-y-auto px-5 py-4 pt-[96px] pb-[150px]">
+          <div className="flex min-h-full flex-col items-center justify-start">
+            <div className="mb-3 flex w-full max-w-3xl flex-col gap-2">
+              <p className="text-xs text-slate-500">
+                Not sure how to begin? You can start with one of these:
+              </p>
+              <div className="flex flex-wrap gap-2 text-xs">
+                {quickPrompts.map((prompt) => (
+                  <button
+                    key={prompt}
+                    type="button"
+                    className="rounded-full border border-emerald-100 bg-emerald-50/70 px-3 py-1 text-emerald-900 transition hover:bg-emerald-100"
+                    onClick={() => {
+                      form.setValue("message", prompt);
+                    }}
+                  >
+                    {prompt}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             {isClient ? (
               <>
-                <MessageWall messages={messages} status={status} durations={durations} onDurationChange={handleDurationChange} />
+                <MessageWall
+                  messages={messages}
+                  status={status}
+                  durations={durations}
+                  onDurationChange={handleDurationChange}
+                />
                 {status === "submitted" && (
-                  <div className="flex justify-start max-w-3xl w-full">
-                    <Loader2 className="size-4 animate-spin text-muted-foreground" />
+                  <div className="flex w-full max-w-3xl justify-start">
+                    <div className="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1 text-[11px] text-emerald-900">
+                      <Loader2 className="size-3 animate-spin" />
+                      Koa is thinking of a gentle next step…
+                    </div>
                   </div>
                 )}
               </>
             ) : (
-              <div className="flex justify-center max-w-2xl w-full">
+              <div className="flex w-full max-w-2xl justify-center">
                 <Loader2 className="size-4 animate-spin text-muted-foreground" />
               </div>
             )}
           </div>
         </div>
-        <div className="fixed bottom-0 left-0 right-0 z-50 bg-linear-to-t from-background via-background/50 to-transparent dark:bg-black overflow-visible pt-13">
-          <div className="w-full px-5 pt-5 pb-1 items-center flex justify-center relative overflow-visible">
+
+        {/* Input & footer */}
+        <div className="fixed bottom-0 left-0 right-0 z-50 overflow-visible bg-linear-to-t from-background via-background/60 to-transparent dark:bg-black pt-13">
+          <div className="flex w-full items-center justify-center px-5 pt-5 pb-1 relative overflow-visible">
             <div className="message-fade-overlay" />
-            <div className="max-w-3xl w-full">
+            <div className="w-full max-w-3xl">
               <form id="chat-form" onSubmit={form.handleSubmit(onSubmit)}>
                 <FieldGroup>
                   <Controller
@@ -197,15 +269,18 @@ export default function Chat() {
                     control={form.control}
                     render={({ field, fieldState }) => (
                       <Field data-invalid={fieldState.invalid}>
-                        <FieldLabel htmlFor="chat-form-message" className="sr-only">
+                        <FieldLabel
+                          htmlFor="chat-form-message"
+                          className="sr-only"
+                        >
                           Message
                         </FieldLabel>
                         <div className="relative h-13">
                           <Input
                             {...field}
                             id="chat-form-message"
-                            className="h-15 pr-15 pl-5 bg-card rounded-[20px]"
-                            placeholder="Type your message here..."
+                            className="h-15 rounded-[20px] bg-card pl-5 pr-15"
+                            placeholder="Tell Koa how you’re feeling or what’s stressing you out…"
                             disabled={status === "streaming"}
                             aria-invalid={fieldState.invalid}
                             autoComplete="off"
@@ -216,7 +291,7 @@ export default function Chat() {
                               }
                             }}
                           />
-                          {(status == "ready" || status == "error") && (
+                          {(status === "ready" || status === "error") && (
                             <Button
                               className="absolute right-3 top-3 rounded-full"
                               type="submit"
@@ -226,7 +301,7 @@ export default function Chat() {
                               <ArrowUp className="size-4" />
                             </Button>
                           )}
-                          {(status == "streaming" || status == "submitted") && (
+                          {(status === "streaming" || status === "submitted") && (
                             <Button
                               className="absolute right-2 top-2 rounded-full"
                               size="icon"
@@ -238,6 +313,13 @@ export default function Chat() {
                             </Button>
                           )}
                         </div>
+                        {/* Safety hint */}
+                        <p className="mt-1 text-[10px] leading-snug text-muted-foreground">
+                          Koa offers simple, non-clinical wellbeing suggestions.
+                          It doesn&apos;t replace professional help. If things
+                          feel very heavy or unsafe, please reach out to someone
+                          you trust or a professional.
+                        </p>
                       </Field>
                     )}
                   />
@@ -245,11 +327,18 @@ export default function Chat() {
               </form>
             </div>
           </div>
-          <div className="w-full px-5 py-3 items-center flex justify-center text-xs text-muted-foreground">
-            © {new Date().getFullYear()} {OWNER_NAME}&nbsp;<Link href="/terms" className="underline">Terms of Use</Link>&nbsp;Powered by&nbsp;<Link href="https://ringel.ai/" className="underline">Ringel.AI</Link>
+          <div className="flex w-full items-center justify-center px-5 py-3 text-xs text-muted-foreground">
+            © {new Date().getFullYear()} {OWNER_NAME}&nbsp;
+            <Link href="/terms" className="underline">
+              Terms of Use
+            </Link>
+            &nbsp;Powered by&nbsp;
+            <Link href="https://ringel.ai/" className="underline">
+              Ringel.AI
+            </Link>
           </div>
         </div>
       </main>
-    </div >
+    </div>
   );
 }
